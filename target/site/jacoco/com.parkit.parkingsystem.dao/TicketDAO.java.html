@@ -13,11 +13,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Timestamp;
 
-<span class="nc" id="L16">public class TicketDAO {</span>
+<span class="fc" id="L16">public class TicketDAO {</span>
 
 <span class="fc" id="L18">    private static final Logger logger = LogManager.getLogger(&quot;TicketDAO&quot;);</span>
 
-<span class="nc" id="L20">    public DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
+<span class="fc" id="L20">    public DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
 
     public boolean saveTicket(Ticket ticket){
 <span class="nc" id="L23">        Connection con = null;</span>
@@ -41,8 +41,8 @@ import java.sql.Timestamp;
     }
 
     public Ticket getTicket(String vehicleRegNumber) {
-<span class="nc" id="L44">        Connection con = null;</span>
-<span class="nc" id="L45">        Ticket ticket = null;</span>
+<span class="fc" id="L44">        Connection con = null;</span>
+<span class="fc" id="L45">        Ticket ticket = null;</span>
         try {
 <span class="nc" id="L47">            con = dataBaseConfig.getConnection();</span>
 <span class="nc" id="L48">            PreparedStatement ps = con.prepareStatement(DBConstants.GET_TICKET);</span>
@@ -61,11 +61,11 @@ import java.sql.Timestamp;
             }
 <span class="nc" id="L62">            dataBaseConfig.closeResultSet(rs);</span>
 <span class="nc" id="L63">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc" id="L64">        }catch (Exception ex){</span>
-<span class="nc" id="L65">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
+<span class="fc" id="L64">        }catch (Exception ex){</span>
+<span class="fc" id="L65">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
         }finally {
-<span class="nc" id="L67">            dataBaseConfig.closeConnection(con);</span>
-<span class="nc" id="L68">            return ticket;</span>
+<span class="pc" id="L67">            dataBaseConfig.closeConnection(con);</span>
+<span class="pc" id="L68">            return ticket;</span>
         }
     }
 

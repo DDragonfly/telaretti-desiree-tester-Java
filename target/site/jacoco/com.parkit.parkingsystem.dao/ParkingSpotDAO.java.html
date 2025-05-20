@@ -11,14 +11,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-<span class="nc" id="L14">public class ParkingSpotDAO {</span>
+<span class="fc" id="L14">public class ParkingSpotDAO {</span>
 <span class="fc" id="L15">    private static final Logger logger = LogManager.getLogger(&quot;ParkingSpotDAO&quot;);</span>
 
-<span class="nc" id="L17">    public DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
+<span class="fc" id="L17">    public DataBaseConfig dataBaseConfig = new DataBaseConfig();</span>
 
     public int getNextAvailableSlot(ParkingType parkingType){
-<span class="nc" id="L20">        Connection con = null;</span>
-<span class="nc" id="L21">        int result=-1;</span>
+<span class="fc" id="L20">        Connection con = null;</span>
+<span class="fc" id="L21">        int result=-1;</span>
         try {
 <span class="nc" id="L23">            con = dataBaseConfig.getConnection();</span>
 <span class="nc" id="L24">            PreparedStatement ps = con.prepareStatement(DBConstants.GET_NEXT_PARKING_SPOT);</span>
@@ -29,12 +29,12 @@ import java.sql.ResultSet;
             }
 <span class="nc" id="L30">            dataBaseConfig.closeResultSet(rs);</span>
 <span class="nc" id="L31">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc" id="L32">        }catch (Exception ex){</span>
-<span class="nc" id="L33">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
+<span class="fc" id="L32">        }catch (Exception ex){</span>
+<span class="fc" id="L33">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
         }finally {
-<span class="nc" id="L35">            dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L35">            dataBaseConfig.closeConnection(con);</span>
         }
-<span class="nc" id="L37">        return result;</span>
+<span class="fc" id="L37">        return result;</span>
     }
 
     public boolean updateParking(ParkingSpot parkingSpot){
