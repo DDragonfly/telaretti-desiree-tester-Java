@@ -18,36 +18,37 @@ import org.apache.logging.log4j.Logger;
 <span class="nc" id="L18">        InputReaderUtil inputReaderUtil = new InputReaderUtil();</span>
 <span class="nc" id="L19">        ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();</span>
 <span class="nc" id="L20">        TicketDAO ticketDAO = new TicketDAO();</span>
-<span class="nc" id="L21">        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);</span>
+<span class="nc" id="L21">        FareCalculatorService fareCalculatorService = new FareCalculatorService();</span>
+<span class="nc" id="L22">        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO,  fareCalculatorService);</span>
 
-<span class="nc bnc" id="L23" title="All 2 branches missed.">        while(continueApp){</span>
-<span class="nc" id="L24">            loadMenu();</span>
-<span class="nc" id="L25">            int option = inputReaderUtil.readSelection();</span>
-<span class="nc bnc" id="L26" title="All 4 branches missed.">            switch(option){</span>
+<span class="nc bnc" id="L24" title="All 2 branches missed.">        while(continueApp){</span>
+<span class="nc" id="L25">            loadMenu();</span>
+<span class="nc" id="L26">            int option = inputReaderUtil.readSelection();</span>
+<span class="nc bnc" id="L27" title="All 4 branches missed.">            switch(option){</span>
                 case 1: {
-<span class="nc" id="L28">                    parkingService.processIncomingVehicle();</span>
-<span class="nc" id="L29">                    break;</span>
+<span class="nc" id="L29">                    parkingService.processIncomingVehicle();</span>
+<span class="nc" id="L30">                    break;</span>
                 }
                 case 2: {
-<span class="nc" id="L32">                    parkingService.processExitingVehicle();</span>
-<span class="nc" id="L33">                    break;</span>
+<span class="nc" id="L33">                    parkingService.processExitingVehicle();</span>
+<span class="nc" id="L34">                    break;</span>
                 }
                 case 3: {
-<span class="nc" id="L36">                    System.out.println(&quot;Exiting from the system!&quot;);</span>
-<span class="nc" id="L37">                    continueApp = false;</span>
-<span class="nc" id="L38">                    break;</span>
+<span class="nc" id="L37">                    System.out.println(&quot;Exiting from the system!&quot;);</span>
+<span class="nc" id="L38">                    continueApp = false;</span>
+<span class="nc" id="L39">                    break;</span>
                 }
-<span class="nc" id="L40">                default: System.out.println(&quot;Unsupported option. Please enter a number corresponding to the provided menu&quot;);</span>
+<span class="nc" id="L41">                default: System.out.println(&quot;Unsupported option. Please enter a number corresponding to the provided menu&quot;);</span>
             }
-<span class="nc" id="L42">        }</span>
-<span class="nc" id="L43">    }</span>
+<span class="nc" id="L43">        }</span>
+<span class="nc" id="L44">    }</span>
 
     private static void loadMenu(){
-<span class="nc" id="L46">        System.out.println(&quot;Please select an option. Simply enter the number to choose an action&quot;);</span>
-<span class="nc" id="L47">        System.out.println(&quot;1 New Vehicle Entering - Allocate Parking Space&quot;);</span>
-<span class="nc" id="L48">        System.out.println(&quot;2 Vehicle Exiting - Generate Ticket Price&quot;);</span>
-<span class="nc" id="L49">        System.out.println(&quot;3 Shutdown System&quot;);</span>
-<span class="nc" id="L50">    }</span>
+<span class="nc" id="L47">        System.out.println(&quot;Please select an option. Simply enter the number to choose an action&quot;);</span>
+<span class="nc" id="L48">        System.out.println(&quot;1 New Vehicle Entering - Allocate Parking Space&quot;);</span>
+<span class="nc" id="L49">        System.out.println(&quot;2 Vehicle Exiting - Generate Ticket Price&quot;);</span>
+<span class="nc" id="L50">        System.out.println(&quot;3 Shutdown System&quot;);</span>
+<span class="nc" id="L51">    }</span>
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
