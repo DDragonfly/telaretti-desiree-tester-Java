@@ -13,7 +13,7 @@ import com.parkit.parkingsystem.model.Ticket;
 <span class="fc" id="L13">        long inTime = ticket.getInTime().getTime();</span>
 <span class="fc" id="L14">        long outTime = ticket.getOutTime().getTime();</span>
 
-<span class="fc" id="L16">        double duration = (outTime - inTime) / (1000.0 * 60 * 60); // durata in ore (es. 0.75)</span>
+<span class="fc" id="L16">        double duration = (outTime - inTime) / (1000.0 * 60 * 60);</span>
 
 <span class="fc bfc" id="L18" title="All 2 branches covered.">        if (duration &gt;= 0.5) {</span>
 <span class="pc bpc" id="L19" title="1 of 3 branches missed.">            switch (ticket.getParkingSpot().getParkingType()) {</span>

@@ -108,9 +108,18 @@ public class ParkingService {
         try{
             String vehicleRegNumber = getVehichleRegNumber();
             Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
+            /*if (ticket == null) {
+                throw new IllegalArgumentException("Ticket not found for vehicle: " + vehicleRegNumber);
+            }*/
             Date outTime = new Date();
             ticket.setOutTime(outTime);
-
+/*
+            if (outTime.before(ticket.getInTime())) {
+                throw new IllegalArgumentException("Out time must be after in time");
+            }
+            ticket.setOutTime(outTime);
+            System.out.println("In time: " + ticket.getInTime() + ", Out time: " + outTime);
+*/
             int nbTicket = ticketDAO.getNbTicket(vehicleRegNumber);
             boolean discount = nbTicket > 1;
 
@@ -120,6 +129,7 @@ public class ParkingService {
                 ParkingSpot parkingSpot = ticket.getParkingSpot();
                 parkingSpot.setAvailable(true);
                 parkingSpotDAO.updateParking(parkingSpot);
+                //ticketDAO.updateTicket(ticket);
                 System.out.println("Please pay the parking fare:" + ticket.getPrice());
                 System.out.println("Recorded out-time for vehicle number:" + ticket.getVehicleRegNumber() + " is:" + outTime);
             }else{

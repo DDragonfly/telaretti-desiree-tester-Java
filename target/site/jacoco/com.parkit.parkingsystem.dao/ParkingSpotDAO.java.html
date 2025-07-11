@@ -20,17 +20,17 @@ import java.sql.ResultSet;
 <span class="fc" id="L20">        Connection con = null;</span>
 <span class="fc" id="L21">        int result=-1;</span>
         try {
-<span class="nc" id="L23">            con = dataBaseConfig.getConnection();</span>
-<span class="nc" id="L24">            PreparedStatement ps = con.prepareStatement(DBConstants.GET_NEXT_PARKING_SPOT);</span>
-<span class="nc" id="L25">            ps.setString(1, parkingType.toString());</span>
-<span class="nc" id="L26">            ResultSet rs = ps.executeQuery();</span>
-<span class="nc bnc" id="L27" title="All 2 branches missed.">            if(rs.next()){</span>
-<span class="nc" id="L28">                result = rs.getInt(1);;</span>
+<span class="fc" id="L23">            con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L24">            PreparedStatement ps = con.prepareStatement(DBConstants.GET_NEXT_PARKING_SPOT);</span>
+<span class="fc" id="L25">            ps.setString(1, parkingType.toString());</span>
+<span class="fc" id="L26">            ResultSet rs = ps.executeQuery();</span>
+<span class="pc bpc" id="L27" title="1 of 2 branches missed.">            if(rs.next()){</span>
+<span class="fc" id="L28">                result = rs.getInt(1);;</span>
             }
-<span class="nc" id="L30">            dataBaseConfig.closeResultSet(rs);</span>
-<span class="nc" id="L31">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="fc" id="L32">        }catch (Exception ex){</span>
-<span class="fc" id="L33">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
+<span class="fc" id="L30">            dataBaseConfig.closeResultSet(rs);</span>
+<span class="fc" id="L31">            dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="nc" id="L32">        }catch (Exception ex){</span>
+<span class="nc" id="L33">            logger.error(&quot;Error fetching next available slot&quot;,ex);</span>
         }finally {
 <span class="fc" id="L35">            dataBaseConfig.closeConnection(con);</span>
         }
@@ -39,22 +39,57 @@ import java.sql.ResultSet;
 
     public boolean updateParking(ParkingSpot parkingSpot){
         //update the availability fo that parking slot
-<span class="nc" id="L42">        Connection con = null;</span>
+<span class="fc" id="L42">        Connection con = null;</span>
         try {
-<span class="nc" id="L44">            con = dataBaseConfig.getConnection();</span>
-<span class="nc" id="L45">            PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_PARKING_SPOT);</span>
-<span class="nc" id="L46">            ps.setBoolean(1, parkingSpot.isAvailable());</span>
-<span class="nc" id="L47">            ps.setInt(2, parkingSpot.getId());</span>
-<span class="nc" id="L48">            int updateRowCount = ps.executeUpdate();</span>
-<span class="nc" id="L49">            dataBaseConfig.closePreparedStatement(ps);</span>
-<span class="nc bnc" id="L50" title="All 2 branches missed.">            return (updateRowCount == 1);</span>
+<span class="fc" id="L44">            con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L45">            PreparedStatement ps = con.prepareStatement(DBConstants.UPDATE_PARKING_SPOT);</span>
+<span class="fc" id="L46">            ps.setBoolean(1, parkingSpot.isAvailable());</span>
+<span class="fc" id="L47">            ps.setInt(2, parkingSpot.getId());</span>
+<span class="fc" id="L48">            int updateRowCount = ps.executeUpdate();</span>
+<span class="fc" id="L49">            dataBaseConfig.closePreparedStatement(ps);</span>
+<span class="pc bpc" id="L50" title="1 of 2 branches missed.">            return (updateRowCount == 1);</span>
 <span class="nc" id="L51">        }catch (Exception ex){</span>
 <span class="nc" id="L52">            logger.error(&quot;Error updating parking info&quot;,ex);</span>
 <span class="nc" id="L53">            return false;</span>
         }finally {
-<span class="nc" id="L55">            dataBaseConfig.closeConnection(con);</span>
+<span class="fc" id="L55">            dataBaseConfig.closeConnection(con);</span>
         }
     }
+
+    public ParkingSpot getParkingSpot(int parkingSpotId) throws Exception {
+<span class="fc" id="L60">        Connection con = null;</span>
+<span class="fc" id="L61">        ParkingSpot parkingSpot = null;</span>
+
+        try {
+<span class="fc" id="L64">            con = dataBaseConfig.getConnection();</span>
+<span class="fc" id="L65">            PreparedStatement ps = con.prepareStatement(</span>
+                    &quot;SELECT PARKING_NUMBER, TYPE, AVAILABLE FROM parking WHERE PARKING_NUMBER = ?&quot;
+            );
+<span class="fc" id="L68">            ps.setInt(1, parkingSpotId);</span>
+<span class="fc" id="L69">            ResultSet rs = ps.executeQuery();</span>
+
+<span class="pc bpc" id="L71" title="1 of 2 branches missed.">            if (rs.next()) {</span>
+<span class="fc" id="L72">                int id = rs.getInt(&quot;PARKING_NUMBER&quot;);</span>
+<span class="fc" id="L73">                ParkingType type = ParkingType.valueOf(rs.getString(&quot;TYPE&quot;));</span>
+<span class="fc" id="L74">                boolean isAvailable = rs.getBoolean(&quot;AVAILABLE&quot;);</span>
+
+<span class="fc" id="L76">                parkingSpot = new ParkingSpot(id, type, isAvailable);</span>
+            }
+
+<span class="fc" id="L79">            rs.close();</span>
+<span class="fc" id="L80">            ps.close();</span>
+
+<span class="nc" id="L82">        } catch (Exception ex) {</span>
+<span class="nc" id="L83">            logger.error(&quot;Error fetching parking spot&quot;, ex);</span>
+<span class="nc" id="L84">            throw ex;</span>
+        } finally {
+<span class="fc" id="L86">            dataBaseConfig.closeConnection(con);</span>
+        }
+
+<span class="fc" id="L89">        return parkingSpot;</span>
+    }
+
+
 
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
