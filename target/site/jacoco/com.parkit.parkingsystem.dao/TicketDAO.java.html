@@ -80,12 +80,12 @@ import java.sql.Timestamp;
 <span class="fc" id="L80">            ps.setInt(3,ticket.getId());</span>
 <span class="fc" id="L81">            ps.execute();</span>
 <span class="fc" id="L82">            return true;</span>
-<span class="nc" id="L83">        }catch (Exception ex){</span>
-<span class="nc" id="L84">            logger.error(&quot;Error saving ticket info&quot;,ex);</span>
+<span class="fc" id="L83">        }catch (Exception ex){</span>
+<span class="fc" id="L84">            logger.error(&quot;Error saving ticket info&quot;,ex);</span>
         }finally {
 <span class="fc" id="L86">            dataBaseConfig.closeConnection(con);</span>
         }
-<span class="nc" id="L88">        return false;</span>
+<span class="fc" id="L88">        return false;</span>
     }
 
     public int getNbTicket(String vehicleRegNumber) {

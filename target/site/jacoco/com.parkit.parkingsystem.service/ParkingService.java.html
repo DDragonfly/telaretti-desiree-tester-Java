@@ -48,8 +48,8 @@ public class ParkingService {
 <span class="fc" id="L48">                ticketDAO.saveTicket(ticket);</span>
 
 <span class="fc" id="L50">                int nbTicket = ticketDAO.getNbTicket(vehicleRegNumber);</span>
-<span class="pc bpc" id="L51" title="1 of 2 branches missed.">                if (nbTicket &gt; 1) {</span>
-<span class="nc" id="L52">                    System.out.println(&quot;Heureux de vous revoir ! En tant qu’utilisateur régulier de notre parking, vous allez obtenir une remise de 5 %&quot;);</span>
+<span class="fc bfc" id="L51" title="All 2 branches covered.">                if (nbTicket &gt; 1) {</span>
+<span class="fc" id="L52">                    System.out.println(&quot;Heureux de vous revoir ! En tant qu’utilisateur régulier de notre parking, vous allez obtenir une remise de 5 %&quot;);</span>
                 }
 
 <span class="fc" id="L55">                System.out.println(&quot;Generated Ticket and saved in DB&quot;);</span>

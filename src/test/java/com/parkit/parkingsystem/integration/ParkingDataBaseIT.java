@@ -89,10 +89,10 @@ public class ParkingDataBaseIT {
         // GIVEN
         int parkingNumber = parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR);
         ParkingSpot parkingSpot = parkingSpotDAO.getParkingSpot(parkingNumber);
-        //ParkingSpot parkingSpot = parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR);
+
         parkingSpot.setAvailable(false);
         parkingSpotDAO.updateParking(parkingSpot);
-        //testParkingACar();
+
         Ticket ticket = new Ticket();
         ticket.setInTime(new Date(System.currentTimeMillis() - (60 * 60 * 1000))); // 1 hour ago
         ticket.setParkingSpot(new ParkingSpot(1, ParkingType.CAR, true));
@@ -102,16 +102,7 @@ public class ParkingDataBaseIT {
         FareCalculatorService fareCalculatorService = new FareCalculatorService();
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO, fareCalculatorService);
 
-        //Ticket ticket = ticketDAO.getTicket("ABCDEF");
-        //assertNotNull(ticket, "Ticket is null");
-
-        //ticket.setOutTime(new Date(System.currentTimeMillis() + 60 * 60 * 1000));
-        //Date outTime = new Date();
-        //ticket.setOutTime(outTime);
-        //ticketDAO.updateTicket(ticket);
-        //ticketDAO.saveTicket(ticket);
         parkingService.processExitingVehicle();
-        //ticketDAO.saveTicket(ticket);
 
         ticket = ticketDAO.getTicket("ABCDEF");
         assertTrue(ticket.getPrice() > 0.0, "Ticket price is not ok");
@@ -119,67 +110,44 @@ public class ParkingDataBaseIT {
         assertNotNull(ticket.getOutTime(), "Out time is null");
         System.out.println("Out time: " + ticket.getOutTime());
 
-        //ParkingSpot parkingSpot = ticket.getParkingSpot();
         System.out.println(parkingSpot.isAvailable());
-        //ParkingSpot parkingSpot = updatedTicket.getParkingSpot();
-        //parkingSpot = parkingSpotDAO.getNextAvailableSlot(parkingSpot.getId());
-      //  assertTrue(parkingSpot.isAvailable(), "Parking Spot is available");
+
         ParkingSpot updatedSpot = parkingSpotDAO.getParkingSpot(parkingSpot.getId());
         assertTrue(updatedSpot.isAvailable(),"Parking Spot is not available");
-
-       // ticket.setInTime(new Date(System.currentTimeMillis() - 60 * 60 * 1000));
-
-       // ticketDAO.saveTicket(ticket);
-        //ticketDAO.updateTicket(ticket);
-
-        // WHEN
-        //parkingService.processExitingVehicle();
-
-        // THEN
-       // Ticket updatedTicket = ticketDAO.getTicket("ABCDEF");
-/*
-        System.out.println("IN-TIME: " + updatedTicket.getInTime());
-        System.out.println("OUT-TIME: " + updatedTicket.getOutTime());
-        System.out.println("PRICE: " + updatedTicket.getPrice());
-
-        assertNotNull(updatedTicket.getOutTime());
-        assertTrue(updatedTicket.getPrice() > 0);
-        //assertTrue(updatedTicket.getParkingSpot().isAvailable(), "Parking spot not updated to available"); */
     }
 
     @Test
     public void testParkingLotExitRecurringUser() {
-        // GIVEN : Simulo un utilisateur récurrent
+        // GIVEN : simulation utilisateur récurrent
         String vehicleRegNumber = "ABCDEF";
 
-        // Prima entrata per renderlo ricorrente
+        // Premiére entrée
         FareCalculatorService fareCalculatorService = new FareCalculatorService();
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO, fareCalculatorService);
-        parkingService.processIncomingVehicle();  // 1° passaggio
+        parkingService.processIncomingVehicle();  // 1° passage
         Ticket ticket = ticketDAO.getTicket(vehicleRegNumber);
         ParkingSpot parkingSpot = ticket.getParkingSpot();
-        Date inTime = new Date(System.currentTimeMillis() - (60 * 60 * 1000)); // 1 ora fa
+        Date inTime = new Date(System.currentTimeMillis() - (60 * 60 * 1000)); // 1 heure avant
         ticket.setInTime(inTime);
         ticketDAO.updateTicket(ticket);
-        //ticketDAO.saveTicket(ticket);
 
-        // Faccio uscire subito per creare lo storico
+        // Sortie pour creer une hystorique
         parkingService.processExitingVehicle();
 
-        // Aspetto un po’ (o setto inTime manuale)
-        inTime = new Date(System.currentTimeMillis() - (60 * 60 * 1000)); // 1 ora fa
+        // changement d'heure
+        inTime = new Date(System.currentTimeMillis() - (60 * 60 * 1000)); // 1 heure avant
         Date outTime = new Date();
 
-        // Nuova entrata => ora è récurrent
+        // Nouvelle entrée - vehicule recurrent
         parkingService.processIncomingVehicle();
         ticket = ticketDAO.getTicket(vehicleRegNumber);
         ticket.setInTime(inTime);
 
-        // Simulo uscita
+        // Simulation sortie
         parkingService.processExitingVehicle();
         Ticket updatedTicket = ticketDAO.getTicket(vehicleRegNumber);
 
-        // WHEN : Calcolo du prix
+        // WHEN : calcul du prix
         double duration = (updatedTicket.getOutTime().getTime() - updatedTicket.getInTime().getTime()) / (1000 * 60 * 60);
         double expectedPriceWithoutDiscount = duration * Fare.CAR_RATE_PER_HOUR;
         double expectedPriceWithDiscount = expectedPriceWithoutDiscount * 0.95;

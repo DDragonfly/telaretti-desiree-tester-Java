@@ -1,6 +1,6 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
 parking-system,com.parkit.parkingsystem.service,FareCalculatorService,5,93,2,11,1,20,2,8,0,3
-parking-system,com.parkit.parkingsystem.service,ParkingService,15,257,4,11,6,67,4,11,0,7
+parking-system,com.parkit.parkingsystem.service,ParkingService,12,260,3,12,5,68,3,12,0,7
 parking-system,com.parkit.parkingsystem.service,InteractiveShell,77,0,6,0,29,0,8,0,4,0
 parking-system,com.parkit.parkingsystem,App,12,0,0,0,5,0,3,0,3,0
 parking-system,com.parkit.parkingsystem.model,ParkingSpot,37,25,8,0,9,10,8,5,4,5
@@ -9,6 +9,6 @@ parking-system,com.parkit.parkingsystem.constants,Fare,3,0,0,0,1,0,1,0,1,0
 parking-system,com.parkit.parkingsystem.constants,ParkingType,0,24,0,0,0,3,0,1,0,1
 parking-system,com.parkit.parkingsystem.constants,DBConstants,3,0,0,0,1,0,1,0,1,0
 parking-system,com.parkit.parkingsystem.util,InputReaderUtil,45,9,4,0,15,2,5,1,3,1
-parking-system,com.parkit.parkingsystem.dao,TicketDAO,55,227,4,4,9,55,4,6,0,6
+parking-system,com.parkit.parkingsystem.dao,TicketDAO,48,234,4,4,6,58,4,6,0,6
 parking-system,com.parkit.parkingsystem.dao,ParkingSpotDAO,22,144,3,3,8,39,3,5,0,5
 parking-system,com.parkit.parkingsystem.config,DataBaseConfig,53,7,6,0,24,2,7,2,4,2
